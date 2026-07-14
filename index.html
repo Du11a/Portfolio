@@ -602,6 +602,19 @@
   }
   .form-status.success { color: var(--green); }
   .form-status.error { color: #e05c5c; }
+  .modal-alt-contact {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--text-dim);
+  }
+  .modal-alt-contact a {
+    color: var(--green);
+    border-bottom: 1px solid transparent;
+  }
+  .modal-alt-contact a:hover { border-color: var(--green); }
 
   footer {
     border-top: 1px solid var(--border);
@@ -923,6 +936,10 @@
       <button type="submit" class="form-submit" id="cf-submit">Send →</button>
       <div class="form-status" id="cf-status"></div>
     </form>
+
+    <div class="modal-alt-contact">
+      Or email me directly at <a href="mailto:jullevenjobs@gmail.com">jullevenjobs@gmail.com</a>
+    </div>
   </div>
 </div>
 
