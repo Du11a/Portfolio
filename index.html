@@ -549,6 +549,35 @@
     resize: vertical;
     min-height: 100px;
   }
+  .rte-toolbar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .rte-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .rte-btn:hover { border-color: var(--green); color: var(--green); }
+  .rte-editor {
+    min-height: 120px;
+    max-height: 300px;
+    overflow-y: auto;
+    line-height: 1.6;
+  }
+  .rte-editor:empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-faint);
+  }
+  .rte-editor ul, .rte-editor ol {
+    padding-left: 22px;
+  }
   .form-submit {
     width: 100%;
     background: var(--green);
@@ -880,18 +909,16 @@
         <input class="form-input" type="email" id="cf-email" name="email" required>
       </div>
       <div class="form-group">
-        <label class="form-label" for="cf-type">What do you need?</label>
-        <select class="form-select" id="cf-type" name="project_type" required>
-          <option value="">Select one</option>
-          <option value="New website">New website</option>
-          <option value="Ongoing site management">Ongoing site management</option>
-          <option value="Social media management">Social media management</option>
-          <option value="Just a question">Just a question</option>
-        </select>
-      </div>
-      <div class="form-group">
         <label class="form-label" for="cf-message">Message</label>
-        <textarea class="form-textarea" id="cf-message" name="message" required placeholder="Tell me a bit about what you're building..."></textarea>
+        <div class="rte-toolbar">
+          <button type="button" class="rte-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+          <button type="button" class="rte-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+          <button type="button" class="rte-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+          <button type="button" class="rte-btn" data-cmd="insertUnorderedList" title="Bullet list">• List</button>
+          <button type="button" class="rte-btn" data-cmd="insertOrderedList" title="Numbered list">1. List</button>
+        </div>
+        <div class="form-textarea rte-editor" id="cf-message" contenteditable="true" data-placeholder="Tell me a bit about what you're building..."></div>
+        <textarea name="message" id="cf-message-hidden" style="display:none;"></textarea>
       </div>
       <button type="submit" class="form-submit" id="cf-submit">Send →</button>
       <div class="form-status" id="cf-status"></div>
@@ -915,11 +942,21 @@
     if (e.key === 'Escape') closeContactModal();
   });
 
+  document.querySelectorAll('.rte-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.execCommand(btn.dataset.cmd, false, null);
+      document.getElementById('cf-message').focus();
+    });
+  });
+
   document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const form = e.target;
     const submitBtn = document.getElementById('cf-submit');
     const status = document.getElementById('cf-status');
+
+    document.getElementById('cf-message-hidden').value = document.getElementById('cf-message').innerHTML;
+
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending...';
     status.textContent = '';
@@ -937,6 +974,7 @@
         status.textContent = "Sent! I'll get back to you soon.";
         status.className = 'form-status success';
         form.reset();
+        document.getElementById('cf-message').innerHTML = '';
         setTimeout(closeContactModal, 2200);
       } else if (data && Array.isArray(data.errors) && data.errors.length) {
         status.textContent = data.errors.map(err => err.message).join(', ');
