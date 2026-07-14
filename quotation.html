@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quotation — Web Development Services by Dulla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-raised: #121212;
+    --border: #232323;
+    --text: #e8e8e6;
+    --text-dim: #8a8a88;
+    --text-faint: #565654;
+    --green: #22923F;
+    --green-deep: #1B7A3E;
+    --green-glow: rgba(34, 146, 63, 0.15);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* HEADER */
+  header {
+    padding: 64px 0 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .doc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .doc-label::before {
+    content: '';
+    width: 16px; height: 1px;
+    background: var(--green);
+  }
+  h1 {
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .doc-meta {
+    margin-top: 20px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    font-size: 13.5px;
+    color: var(--text-dim);
+  }
+  .doc-meta span {
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    display: block;
+    margin-top: 3px;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 44px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  p {
+    color: var(--text-dim);
+    font-size: 15px;
+    max-width: 620px;
+  }
+  p + p { margin-top: 12px; }
+
+  ul {
+    margin-top: 14px;
+    padding-left: 20px;
+  }
+  li {
+    color: var(--text-dim);
+    font-size: 14.5px;
+    margin-bottom: 8px;
+  }
+  li strong { color: var(--text); }
+
+  /* PRICING CARDS */
+  .price-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 600px) {
+    .price-grid { grid-template-columns: 1fr; }
+  }
+  .price-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    background: var(--bg-raised);
+  }
+  .price-card.highlight {
+    border-color: var(--green);
+    background: linear-gradient(180deg, var(--green-glow) 0%, var(--bg-raised) 40%);
+  }
+  .price-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .price-amount {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .price-amount .unit {
+    font-size: 14px;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+  .price-desc {
+    margin-top: 8px;
+    color: var(--text-dim);
+    font-size: 13.5px;
+  }
+  .payment-split {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .payment-split-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .payment-split-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .payment-split-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: right;
+  }
+  .payment-split-value em {
+    display: block;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-top: 2px;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-marker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--green);
+    min-width: 60px;
+    padding-top: 2px;
+  }
+  .timeline-content strong {
+    display: block;
+    font-size: 14.5px;
+    margin-bottom: 3px;
+    color: var(--text);
+  }
+  .timeline-content span {
+    font-size: 13.5px;
+    color: var(--text-dim);
+  }
+
+  /* CLOSING */
+  .closing {
+    padding: 56px 0;
+    text-align: center;
+  }
+  .closing h2 {
+    font-size: 24px;
+  }
+  .closing p {
+    margin: 0 auto;
+  }
+  .cta-row {
+    margin-top: 28px;
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    padding: 13px 24px;
+    border-radius: 4px;
+    font-weight: 500;
+    background: var(--green);
+    color: #0a0a0a;
+    display: inline-block;
+  }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  footer {
+    padding: 32px 0;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="doc-label">QUOTATION</div>
+    <h1>Web Development Services<br>Rates & Terms</h1>
+    <div class="doc-meta">
+      <div>PREPARED BY<span>Dulla</span></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="section-num mono">01</div>
+    <h2>Investment</h2>
+    <p>Standard rates for a website build, plus an ongoing monthly retainer to keep it running and growing.</p>
+
+    <div class="price-grid">
+      <div class="price-card highlight">
+        <div class="price-label">One-time build</div>
+        <div class="price-amount">₱40,000</div>
+        <div class="price-desc" style="margin-bottom: 6px; color: var(--text-faint); font-family: 'JetBrains Mono', monospace;">(≈ $650 USD)</div>
+        <div class="price-desc">Final build, backend/data setup, admin dashboard if needed, and launch to your domain. Revisions included, within reason, until launch.</div>
+        <div class="payment-split">
+          <div class="payment-split-item">
+            <span class="payment-split-label">Downpayment</span>
+            <span class="payment-split-value">₱20,000 <em>(50%, before work begins)</em></span>
+          </div>
+          <div class="payment-split-item">
+            <span class="payment-split-label">Before launch</span>
+            <span class="payment-split-value">₱20,000 <em>(50%, before site goes live)</em></span>
+          </div>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-label">Monthly retainer</div>
+        <div class="price-amount">₱10,000<span class="unit">/mo</span></div>
+        <div class="price-desc" style="margin-bottom: 6px; color: var(--text-faint); font-family: 'JetBrains Mono', monospace;">(≈ $163 USD/mo)</div>
+        <div class="price-desc">Ongoing site updates, social media management, and new features as they come up.</div>
+      </div>
+    </div>
+    <p style="margin-top: 14px; font-size: 12.5px; color: var(--text-faint);">USD figures are approximate, for reference only, based on exchange rates at time of writing. Billed in PHP. Build fee is split 50/50 as shown above — the site goes live only after both payments are received; retainer is billed monthly.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-num mono">02</div>
+    <h2>What the retainer covers</h2>
+    <ul>
+      <li><strong>Site updates</strong> — [e.g. content changes, schedule updates, new announcements]</li>
+      <li><strong>Social media management</strong> — [e.g. Instagram and Facebook, posting and day-to-day upkeep]</li>
+      <li><strong>Feature updates</strong> — [e.g. new site features and improvements as the business grows]</li>
+      <li><strong>Direct support</strong> — a single point of contact who already knows the site, not a new person each time</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-num mono">03</div>
+    <h2>Next steps</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-marker mono">01</div>
+        <div class="timeline-content">
+          <strong>Discuss & confirm scope</strong>
+          <span>Agree on what's being built and the timeline</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-marker mono">02</div>
+        <div class="timeline-content">
+          <strong>Downpayment (50%)</strong>
+          <span>Paid before work begins</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-marker mono">03</div>
+        <div class="timeline-content">
+          <strong>Build & review</strong>
+          <span>Site is built, shared for feedback, and revised until you're happy with it</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-marker mono">04</div>
+        <div class="timeline-content">
+          <strong>Final payment (50%)</strong>
+          <span>Paid once the build is complete and ready to go live</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-marker mono">05</div>
+        <div class="timeline-content">
+          <strong>Launch</strong>
+          <span>Site goes live on your domain, ongoing partnership begins</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="closing">
+  <div class="wrap">
+    <h2>Ready to move forward?</h2>
+    <p>Happy to answer any questions or adjust scope to fit what you need.</p>
+    <div class="cta-row">
+      <a href="mailto:jullevenjobs@gmail.com" class="btn">Email Dulla →</a>
+    </div>
+  </div>
+</div>
+
+<footer>Prepared by Dulla · jullevenjobs@gmail.com</footer>
+
+</body>
+</html>
