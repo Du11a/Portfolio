@@ -98,7 +98,6 @@
     padding: 120px 0 90px;
     border-bottom: 1px solid var(--border);
     position: relative;
-    overflow: hidden;
   }
   .hero::before {
     content: '';
@@ -150,7 +149,7 @@
     padding: 13px 22px;
     border-radius: 4px;
     font-weight: 500;
-    transition: all 0.15s ease;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -159,18 +158,97 @@
     background: transparent;
     -webkit-appearance: none;
     appearance: none;
+    position: relative;
+    overflow: visible;
+    isolation: isolate;
+  }
+  .btn:active {
+    transform: scale(0.94) !important;
   }
   .btn-primary {
     background: var(--green);
     color: #0a0a0a;
   }
-  .btn-primary:hover { background: #2bab4a; transform: translateY(-1px); }
+  .btn-primary:hover {
+    background: #2bab4a;
+    transform: translateY(-4px) scale(1.08) rotate(-1deg);
+    box-shadow: 0 16px 36px -6px rgba(34, 146, 63, 0.65), 0 0 0 6px rgba(34, 146, 63, 0.12);
+    animation: btn-shake 0.5s ease;
+  }
   .btn-ghost {
     background: var(--bg);
     border: 1px solid var(--border);
     color: var(--text);
   }
-  .btn-ghost:hover { border-color: var(--green); color: var(--green); }
+  .btn-ghost:hover {
+    border-color: var(--green);
+    color: var(--green);
+    transform: translateY(-4px) scale(1.08) rotate(1deg);
+    box-shadow: 0 16px 36px -8px rgba(34, 146, 63, 0.4), 0 0 0 6px rgba(34, 146, 63, 0.1);
+    animation: btn-shake 0.5s ease;
+  }
+  @keyframes btn-shake {
+    0% { transform: translateY(0) scale(1) rotate(0); }
+    30% { transform: translateY(-5px) scale(1.1) rotate(-2deg); }
+    50% { transform: translateY(-3px) scale(1.06) rotate(2deg); }
+    70% { transform: translateY(-4px) scale(1.09) rotate(-1deg); }
+    100% { transform: translateY(-4px) scale(1.08) rotate(0); }
+  }
+
+  /* Particle burst */
+  .btn::before, .btn::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .btn.bursting::before, .btn.bursting::after {
+    animation: burst-particle 0.6s ease-out forwards;
+  }
+  .btn.bursting::after {
+    background: #fff;
+    animation-delay: 0.05s;
+  }
+  @keyframes burst-particle {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    100% { transform: translate(calc(-50% + var(--bx, 40px)), calc(-50% + var(--by, -40px))) scale(0); opacity: 0; }
+  }
+
+  /* Ripple ring on click */
+  .btn-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    transform: scale(0);
+    animation: ripple-expand 0.6s ease-out forwards;
+    pointer-events: none;
+    z-index: 5;
+  }
+  @keyframes ripple-expand {
+    to { transform: scale(3); opacity: 0; }
+  }
+
+  /* Themed floating icons above buttons */
+  .btn-icon-pop {
+    position: absolute;
+    bottom: 100%;
+    left: var(--ix, 50%);
+    font-size: var(--isize, 20px);
+    pointer-events: none;
+    z-index: 20;
+    animation: icon-pop-up 1.1s ease-out forwards;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  }
+  @keyframes icon-pop-up {
+    0% { transform: translate(-50%, 10px) scale(0.3) rotate(0deg); opacity: 0; }
+    15% { opacity: 1; }
+    100% { transform: translate(-50%, -70px) scale(1.1) rotate(var(--irot, 15deg)); opacity: 0; }
+  }
 
   /* ---------- SECTION LABEL ---------- */
   .section {
@@ -665,8 +743,8 @@
       built in from day one, not bolted on later.
     </p>
     <div class="hero-cta">
-      <a href="#work" class="btn btn-primary">See the work →</a>
-      <button onclick="openContactModal()" class="btn btn-ghost">Start a project</button>
+      <a href="#work" class="btn btn-primary" data-icon-theme="work">See the work →</a>
+      <button onclick="openContactModal()" class="btn btn-ghost" data-icon-theme="celebrate">Start a project</button>
     </div>
   </div>
 </header>
@@ -900,7 +978,7 @@
     <h2 class="contact-title">Got a site that needs <span class="accent">someone who'll stay</span>?</h2>
     <p class="contact-sub">Let's talk about what you're building — or what's already live and needs a hand.</p>
     <div class="contact-cta">
-      <button onclick="openContactModal()" class="btn btn-primary">Start a project →</button>
+      <button onclick="openContactModal()" class="btn btn-primary" data-icon-theme="celebrate">Start a project →</button>
       <a href="https://github.com/Du11a" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
     </div>
   </div>
@@ -944,6 +1022,63 @@
 </div>
 
 <script>
+  // Big energetic button effects: particle burst + click ripple
+  const ICON_THEMES = {
+    work: ['💻', '🚀', '📐', '📏', '⚙️', '🖥️'],
+    celebrate: ['🎉', '🎊', '🥳', '🎈', '✨', '🍾']
+  };
+
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 30 + Math.random() * 25;
+      btn.style.setProperty('--bx', `${Math.cos(angle) * dist}px`);
+      btn.style.setProperty('--by', `${Math.sin(angle) * dist}px`);
+      btn.classList.remove('bursting');
+      void btn.offsetWidth; // restart animation
+      btn.classList.add('bursting');
+
+      const theme = btn.dataset.iconTheme;
+      if (theme && ICON_THEMES[theme]) {
+        const icons = ICON_THEMES[theme];
+        if (btn._iconInterval) clearInterval(btn._iconInterval);
+
+        const spawnIcon = () => {
+          const icon = document.createElement('span');
+          icon.className = 'btn-icon-pop';
+          icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+          icon.style.setProperty('--ix', `${15 + Math.random() * 70}%`);
+          icon.style.setProperty('--isize', `${16 + Math.random() * 12}px`);
+          icon.style.setProperty('--irot', `${(Math.random() - 0.5) * 60}deg`);
+          btn.appendChild(icon);
+          setTimeout(() => icon.remove(), 1150);
+        };
+
+        spawnIcon();
+        btn._iconInterval = setInterval(spawnIcon, 260);
+      }
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      if (btn._iconInterval) {
+        clearInterval(btn._iconInterval);
+        btn._iconInterval = null;
+      }
+    });
+
+    btn.addEventListener('click', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'btn-ripple';
+      const size = Math.max(rect.width, rect.height) * 1.2;
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 650);
+    });
+  });
+
   function openContactModal() {
     document.getElementById('contactModal').classList.add('open');
     document.body.style.overflow = 'hidden';
