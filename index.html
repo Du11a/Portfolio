@@ -122,6 +122,12 @@
     width: 16px; height: 1px;
     background: var(--green);
   }
+  .hero-fullname {
+    font-size: 14px;
+    color: var(--text-faint);
+    letter-spacing: 0.03em;
+    margin-bottom: 16px;
+  }
   h1 {
     font-size: clamp(2.4rem, 6vw, 4.2rem);
     font-weight: 800;
@@ -274,6 +280,90 @@
     color: var(--text-dim);
     max-width: 560px;
     font-size: 15.5px;
+  }
+
+  /* ---------- EXPERIENCE ---------- */
+  .exp-timeline {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+  }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exp-item:first-child { padding-top: 0; }
+  .exp-item:last-child { border-bottom: none; }
+  @media (max-width: 640px) {
+    .exp-item { grid-template-columns: 1fr; gap: 8px; }
+  }
+  .exp-period {
+    font-size: 12px;
+    color: var(--green);
+    letter-spacing: 0.03em;
+    padding-top: 3px;
+  }
+  .exp-role {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .exp-company {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .exp-desc {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.65;
+    max-width: 600px;
+  }
+  .edu-block {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+  .edu-label {
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .edu-school {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .edu-years {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 3px;
+  }
+  .cert-list {
+    list-style: none;
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .cert-list li {
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+  .cert-list a {
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1px;
+  }
+  .cert-list a:hover { color: var(--green); border-color: var(--green); }
+  .cert-note {
+    color: var(--text-faint);
+    font-size: 12.5px;
   }
 
   /* ---------- PROJECTS ---------- */
@@ -724,6 +814,7 @@
   <div class="wrap">
     <div class="brand"><span class="dot"></span>DULLA</div>
     <div class="nav-links">
+      <a href="#experience">Experience</a>
       <a href="#work">Work</a>
       <a href="#tools">Tools</a>
       <a href="#partnership">How I Work</a>
@@ -735,6 +826,7 @@
 <header class="hero">
   <div class="wrap">
     <div class="eyebrow mono">WEB DEVELOPER — SITE PARTNER</div>
+    <div class="hero-fullname mono">Julleven Mendoza</div>
     <h1>I don't just ship sites.<br>I <span class="accent">sail with them.</span></h1>
     <p class="hero-sub">
       Dulla builds websites from scratch — with the maintenance, admin tooling, and long-term support
@@ -746,6 +838,97 @@
     </div>
   </div>
 </header>
+
+<section class="section" id="experience">
+  <div class="wrap">
+    <div class="section-label">Background</div>
+    <h2 class="section-title">A decade in customer service and data before web dev.</h2>
+    <p class="section-desc">This is where the "long-term partner" instinct comes from — years of direct client contact, data work, and keeping people happy under real deadlines.</p>
+    <button class="btn btn-ghost" style="margin-top: 24px;" onclick="openExperienceModal()">View full experience & education →</button>
+  </div>
+</section>
+
+<div class="modal-overlay" id="experienceModal">
+  <div class="modal-box" style="max-width: 620px;">
+    <button class="modal-close" onclick="closeExperienceModal()" aria-label="Close">×</button>
+    <div class="modal-title">Experience & Education</div>
+    <div class="modal-sub">Julleven Mendoza — full background</div>
+
+    <div class="exp-timeline">
+
+      <div class="exp-item">
+        <div class="exp-period mono">DEC 2024 — PRESENT</div>
+        <div class="exp-main">
+          <div class="exp-role">Sr. Process Executive</div>
+          <div class="exp-company">Cognizant · Bridgetowne, Quezon City</div>
+          <p class="exp-desc">Transfer Agent maintaining stock ownership records for publicly traded companies, handling accurate transfer of securities between buyers and sellers, dividend distribution, and stock splits. Also part of Escalation Management — resolving complex billing disputes and delivery delays, applying retention tactics, and maintaining customer satisfaction through clear communication.</p>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period mono">APR 2024 — DEC 2024</div>
+        <div class="exp-main">
+          <div class="exp-role">Senior Processing Associate</div>
+          <div class="exp-company">TATA Consultancy Services · BGC, Taguig</div>
+          <p class="exp-desc">Supported customers using CRM tools like SAP and Salesforce, answered inquiries about energy plans, found the best plan for each customer, and consistently met daily KPIs while collaborating across teams via MS Teams.</p>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period mono">DEC 2023 — MAR 2024</div>
+        <div class="exp-main">
+          <div class="exp-role">Customer Support</div>
+          <div class="exp-company">ECLARO · Quezon City, Commonwealth</div>
+          <p class="exp-desc">Updated subscription rate fees for publishers, maintained database accuracy through QA forms, gathered subscription info across multiple channels, and coordinated pricing inquiries with CSRs and Account Managers via Slack.</p>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period mono">NOV 2021 — OCT 2023</div>
+        <div class="exp-main">
+          <div class="exp-role">Teammate (Back Office)</div>
+          <div class="exp-company">TaskUs · WFH / Ortigas</div>
+          <p class="exp-desc">Supported clients on payroll, tax setup, time tracking, and onboarding across inbound calls, chats, and emails. On the back-office side: case routing, data management, building trackers in Google Sheets, data cleaning, analysis, and visualization.</p>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period mono">DEC 2019 — JAN 2021</div>
+        <div class="exp-main">
+          <div class="exp-role">Customer Service Advocate</div>
+          <div class="exp-company">Concentrix · WFH / Pasig</div>
+          <p class="exp-desc">Handled inbound calls assisting healthcare providers with member benefits — deductibles, copay, coinsurance, out-of-pocket maximums — and clarified claims issues as they came up during calls.</p>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period mono">JUL 2015 — MAR 2017</div>
+        <div class="exp-main">
+          <div class="exp-role">Data Analyst</div>
+          <div class="exp-company">Accenture Incorporated · Cubao</div>
+          <p class="exp-desc">Non-voice claims processing — analyzing insurance claims against deductibles, copay, state mandates, age, and illness type, entering claim details accurately, and meeting daily processing quotas.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="edu-block">
+      <div class="edu-label mono">EDUCATION</div>
+      <div class="edu-school">University of Manila — Computer Science</div>
+      <div class="edu-years mono">2010 — 2014</div>
+    </div>
+
+    <div class="edu-block">
+      <div class="edu-label mono">CERTIFICATES</div>
+      <ul class="cert-list">
+        <li><a href="https://bit.ly/3Lo2Iu8" target="_blank" rel="noopener">Foundations: Data, Data, Everywhere ↗</a></li>
+        <li><a href="https://bit.ly/3tSaYg6" target="_blank" rel="noopener">Ask Questions to Make Data-Driven Decisions ↗</a></li>
+        <li><a href="https://bit.ly/36IMjSn" target="_blank" rel="noopener">Prepare Data for Exploration ↗</a></li>
+        <li>Business Insights and Data Science (BIDS) Preparatory Course <span class="cert-note">— company provided</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 <section class="section" id="work">
   <div class="wrap">
@@ -1090,6 +1273,21 @@
   });
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeContactModal();
+  });
+
+  function openExperienceModal() {
+    document.getElementById('experienceModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeExperienceModal() {
+    document.getElementById('experienceModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('experienceModal').addEventListener('click', function(e) {
+    if (e.target === this) closeExperienceModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeExperienceModal();
   });
 
   document.querySelectorAll('.rte-btn').forEach(btn => {
